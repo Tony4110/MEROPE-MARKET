@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Merope — Marketplace d'intelligence de marché</title>
+<meta name="description" content="Merope révèle les marchés cachés : des datasets d'intelligence vivante, opérés par un réseau d'opérateurs de marché.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F7F4; --surface:#FFFFFF; --surface-2:#FAFBFA; --fg:#14201C; --muted:#5A6A62;
+    --line:#E3E9E4; --accent:#0E7C5A; --accent-weak:#E4F1EA; --star:#A8781A; --ink:#101814;
+    --t-data:#2E6FA6; --t-hist:#0E7C5A; --t-event:#8A54AE; --t-signal:#B07714; --t-pack:#14201C;
+    --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+    --font-body:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0E1512; --surface:#152019; --surface-2:#111A16; --fg:#EAF2EE; --muted:#9DB0A7;
+    --line:#243029; --accent:#34D399; --accent-weak:#163029; --star:#E3C25A; --ink:#EAF2EE;
+    --t-data:#5AA9E6; --t-hist:#34D399; --t-event:#B98AD6; --t-signal:#E3C25A; --t-pack:#9DB0A7;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0E1512; --surface:#152019; --surface-2:#111A16; --fg:#EAF2EE; --muted:#9DB0A7;
+    --line:#243029; --accent:#34D399; --accent-weak:#163029; --star:#E3C25A; --ink:#EAF2EE;
+    --t-data:#5AA9E6; --t-hist:#34D399; --t-event:#B98AD6; --t-signal:#E3C25A; --t-pack:#9DB0A7;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  /* header */
+  header{position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);
+    background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(8px)}
+  .hd{display:flex;align-items:center;gap:12px;padding:13px 0}
+  .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--fg)}
+  .brand .star{width:14px;height:14px;flex:none}
+  .brand b{font-family:var(--font-display);font-weight:600;font-size:21px;letter-spacing:-.01em}
+  .brand span{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .proto{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+  .tgl{background:none;border:1px solid var(--line);border-radius:999px;width:30px;height:30px;cursor:pointer;color:var(--muted);font-size:14px;flex:none}
+  /* hero */
+  .hero{padding:52px 0 8px}
+  .hero .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,5.4vw,48px);line-height:1.05;margin:0 0 14px;text-wrap:balance;max-width:18ch}
+  .hero p{font-size:16px;color:var(--muted);max-width:60ch;margin:0}
+  .lab{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:44px 0 14px}
+  /* markets */
+  .markets{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+  .mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .mcard b{font-family:var(--font-display);font-size:16px;display:block;font-weight:600}
+  .mcard small{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);display:block;margin-top:5px;line-height:1.5}
+  /* products */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+  .card.pack{border-color:var(--accent)}
+  .tag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;padding:3px 8px;border-radius:6px;color:#fff;align-self:flex-start}
+  .t-data{background:var(--t-data)} .t-hist{background:var(--t-hist)} .t-event{background:var(--t-event)} .t-signal{background:var(--t-signal)} .t-pack{background:var(--t-pack);color:var(--bg)}
+  .card h3{font-family:var(--font-display);font-weight:600;font-size:18px;margin:2px 0 0;line-height:1.15}
+  .op{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11.5px;color:var(--muted)}
+  .op .av{width:18px;height:18px;border-radius:50%;background:var(--accent-weak);color:var(--accent);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+  .mrow{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.7}
+  .mrow b{color:var(--fg);font-weight:600}
+  .prev{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-family:var(--font-mono);font-size:10.5px;color:var(--muted);overflow:hidden}
+  .prev div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:4px}
+  .price{font-family:var(--font-display);font-weight:600;font-size:22px}
+  .price small{font-family:var(--font-mono);font-size:10px;color:var(--muted);font-weight:400;display:block}
+  .buy{appearance:none;border:none;border-radius:9px;background:var(--accent);color:#fff;font:inherit;font-weight:600;font-size:13px;padding:9px 13px;cursor:pointer}
+  .buy.ghost{background:transparent;border:1px solid var(--line);color:var(--fg);font-weight:500}
+  /* operators */
+  .ops{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+  .opcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:9px}
+  .opcard .top{display:flex;align-items:center;gap:11px}
+  .opcard .big-av{width:42px;height:42px;border-radius:11px;background:var(--star);color:#fff;font-family:var(--font-display);font-weight:600;font-size:18px;display:flex;align-items:center;justify-content:center;flex:none}
+  .opcard h4{font-family:var(--font-display);font-size:16px;margin:0;font-weight:600}
+  .opcard .sub{font-family:var(--font-mono);font-size:10.5px;color:var(--muted)}
+  .opcard p{font-size:13px;color:var(--muted);margin:0}
+  .statuspill{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;padding:2px 7px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+  .statuspill.active{color:var(--accent);border-color:var(--accent)}
+  .statuspill.founding{color:var(--star);border-color:var(--star)}
+  /* cta */
+  .cta{margin:48px 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px;text-align:center}
+  .cta h2{font-family:var(--font-display);font-weight:600;font-size:clamp(22px,3.4vw,30px);margin:0 0 8px}
+  .cta p{color:var(--muted);max-width:52ch;margin:0 auto 18px}
+  .cta a{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 22px;border-radius:10px}
+  /* states */
+  .state{padding:40px 0;text-align:center;font-family:var(--font-mono);font-size:13px;color:var(--muted)}
+  .state.err{color:#c0392b}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .state.err{color:#ff8a80}}
+  :root[data-theme="dark"] .state.err{color:#ff8a80}
+  .skel{background:var(--surface);border:1px solid var(--line);border-radius:16px;height:230px;animation:p 1.3s ease-in-out infinite}
+  @keyframes p{0%,100%{opacity:.5}50%{opacity:.85}}
+  footer{border-top:1px solid var(--line);margin-top:54px;padding:26px 0;font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.7}
+  footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <a class="brand" href="#">
+    <svg class="star" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 1.5l2.2 7.1 7.3.1-5.9 4.4 2.2 7-5.8-4.3L6.2 20l2.2-7L2.5 8.7l7.3-.1L12 1.5z" fill="var(--star)"/></svg>
+    <b>Merope</b><span>· révéler les marchés cachés</span>
+  </a>
+  <span class="proto">Prototype</span>
+  <button class="tgl" id="tgl" title="Thème">◐</button>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Marketplace d'intelligence de marché</div>
+    <h1>Les marchés cachés, rendus lisibles et achetables.</h1>
+    <p>Merope transforme la donnée publique en intelligence vivante — des datasets historisés, capturés en continu et opérés par un réseau d'opérateurs de marché. Chaque produit ci-dessous est relié à un marché et à un opérateur réel.</p>
+  </section>
+
+  <div class="lab">Familles de marché corrélées</div>
+  <div class="markets" id="markets"><div class="state">Chargement des marchés…</div></div>
+
+  <div class="lab">Produits d'intelligence · marketplace</div>
+  <div class="grid" id="products">
+    <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+  </div>
+
+  <div class="lab">Opérateurs du réseau</div>
+  <div class="ops" id="operators"><div class="state">Chargement des opérateurs…</div></div>
+
+  <section class="cta">
+    <h2>Devenez opérateur de marché</h2>
+    <p>Un marché × territoire vous est confié. Vous opérez l'intelligence, vous vendez vos datasets, vous gardez 70 % des revenus. Programme fondateur en cours.</p>
+    <a href="#" id="offerLink">Découvrir l'offre fondatrice →</a>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  Merope · révéler les marchés cachés — prototype. Les produits, prix et aperçus affichés sont illustratifs ; aucun paiement réel n'est traité sur cette page.<br>
+  Données servies en direct depuis l'OS Merope. © Dreamotion OÜ.
+</div></footer>
+
+<script>
+const SB_URL='https://rjcuuejbpkmtcxgiqyfo.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqY3V1ZWpicGttdGN4Z2lxeWZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTExMTAzMzEsImV4cCI6MjEwNjY4NjMzMX0.HEeR9Ee23d2PWMsHjlOc914XGIYvk9s8t4pLXWTZ7_A';
+
+/* ---- theme toggle ---- */
+const tgl=document.getElementById('tgl');
+try{const s=localStorage.getItem('merope-theme'); if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}
+tgl.onclick=()=>{
+  const cur=document.documentElement.getAttribute('data-theme');
+  const sysDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const next=cur? (cur==='dark'?'light':'dark') : (sysDark?'light':'dark');
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('merope-theme',next);}catch(e){}
+};
+
+/* ---- supabase REST ---- */
+async function sb(path){
+  const r=await fetch(`${SB_URL}/rest/v1/${path}`,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}});
+  if(!r.ok) throw new Error(r.status+' '+(await r.text()).slice(0,120));
+  return r.json();
+}
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const initials=n=>String(n||'?').replace(/[^A-Za-zÀ-ÿ ]/g,'').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';
+const eur=v=>v==null?'—':'€'+Number(v).toLocaleString('fr-FR');
+const TAGC={dataset:'t-data',history:'t-hist',events:'t-event',signals:'t-signal',market_pack:'t-pack'};
+const TAGL={dataset:'Dataset',history:'Historique',events:'Évènements',signals:'Signaux',market_pack:'Market Pack'};
+
+/* ---- markets ---- */
+async function loadMarkets(){
+  const el=document.getElementById('markets');
+  try{
+    const m=await sb('markets?select=slug,name,tagline,sort_order&order=sort_order.asc');
+    if(!m.length){el.innerHTML='<div class="state">Aucun marché publié pour l\'instant.</div>';return;}
+    el.innerHTML=m.map(x=>`<div class="mcard"><b>${esc(x.name)}</b><small>${esc(x.tagline||'')}</small></div>`).join('');
+  }catch(e){el.innerHTML=`<div class="state err">Marchés indisponibles — ${esc(e.message)}</div>`;}
+}
+
+/* ---- products ---- */
+function previewHtml(p){
+  if(!p||typeof p!=='object')return '';
+  if(Array.isArray(p.rows)&&p.rows.length)
+    return '<div class="prev">'+p.rows.slice(0,3).map(r=>`<div>${esc(Array.isArray(r)?r.join(' · '):r)}</div>`).join('')+'</div>';
+  if(Array.isArray(p.combines)&&p.combines.length)
+    return `<div class="prev"><div>combine : ${esc(p.combines.join(' + '))}</div></div>`;
+  return '';
+}
+async function loadProducts(){
+  const el=document.getElementById('products');
+  try{
+    const q='products?select=name,product_type,coverage,record_count,history_from,history_to,update_frequency,confidence,license,price_eur,preview,operators(name,slug),markets(name,tagline),territories(name)&status=eq.live&order=price_eur.asc';
+    const d=await sb(q);
+    if(!d.length){el.innerHTML='<div class="state">Aucun produit publié pour l\'instant. Lance le seed (INSTALL 02) puis recharge.</div>';return;}
+    el.innerHTML=d.map(p=>{
+      const opName=p.operators?p.operators.name:'—';
+      const mk=p.markets?p.markets.name:'';
+      const terr=p.territories?p.territories.name:'';
+      const cls=TAGC[p.product_type]||'t-data', lab=TAGL[p.product_type]||p.product_type;
+      const hist=(p.history_from&&p.history_to)?`${String(p.history_from).slice(0,4)}→${String(p.history_to).slice(0,4)}`:'—';
+      const recs=p.record_count!=null?Number(p.record_count).toLocaleString('fr-FR'):'—';
+      return `<article class="card${p.product_type==='market_pack'?' pack':''}">
+        <span class="tag ${cls}">${esc(lab)}</span>
+        <h3>${esc(p.name)}</h3>
+        <div class="op"><span class="av">${esc(initials(opName))}</span>Opéré par ${esc(opName)}</div>
+        <div class="mrow"><b>${esc(mk)}</b>${terr?' · '+esc(terr):''}<br>
+          couverture <b>${esc(p.coverage||'—')}</b> · ${recs} enreg.<br>
+          historique <b>${hist}</b> · maj ${esc(p.update_frequency||'—')}<br>
+          confiance <b>${esc(p.confidence||'—')}</b> · licence ${esc(p.license||'—')}</div>
+        ${previewHtml(p.preview)}
+        <div class="foot">
+          <div class="price">${eur(p.price_eur)}<small>accès dataset</small></div>
+          <div style="display:flex;gap:7px"><button class="buy ghost">Aperçu</button><button class="buy">Acquérir</button></div>
+        </div>
+      </article>`;
+    }).join('');
+    el.querySelectorAll('.buy').forEach(b=>b.onclick=()=>alert('Prototype — le paiement n\'est pas encore actif. Contactez Dreamotion pour un accès anticipé.'));
+  }catch(e){el.innerHTML=`<div class="state err">Produits indisponibles — ${esc(e.message)}</div>`;}
+}
+
+/* ---- operators ---- */
+async function loadOperators(){
+  const el=document.getElementById('operators');
+  try{
+    const d=await sb('operators?select=slug,name,bio,status,reputation,revenue_share,markets(name),territories(name)&order=status.asc');
+    if(!d.length){el.innerHTML='<div class="state">Aucun opérateur pour l\'instant.</div>';return;}
+    el.innerHTML=d.map(o=>{
+      const mk=o.markets?o.markets.name:'—', terr=o.territories?o.territories.name:'';
+      const st=o.status==='active'?'active':(o.status==='founding'?'founding':'');
+      const stl=o.status==='founding'?'À attribuer':(o.status||'');
+      const rep=o.reputation!=null?`fiabilité ${o.reputation}/100`:'nouveau nœud';
+      return `<div class="opcard">
+        <div class="top"><div class="big-av">${esc(initials(o.name))}</div>
+          <div><h4>${esc(o.name)}</h4><div class="sub">${esc(mk)}${terr?' · '+esc(terr):''}</div></div></div>
+        <p>${esc(o.bio||'')}</p>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span class="statuspill ${st}">${esc(stl)}</span>
+          <span class="sub" style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted)">${esc(rep)} · ${o.revenue_share!=null?o.revenue_share+'% opérateur':''}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){el.innerHTML=`<div class="state err">Opérateurs indisponibles — ${esc(e.message)}</div>`;}
+}
+
+loadMarkets();loadProducts();loadOperators();
+</script>
+</body>
+</html>

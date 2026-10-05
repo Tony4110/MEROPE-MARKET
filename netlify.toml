@@ -1,0 +1,12 @@
+# Merope — configuration de déploiement Netlify.
+# Site statique servi depuis le dossier docs/. Pas d'étape de build.
+[build]
+  publish = "docs"
+  command = ""
+
+# En-têtes de sécurité raisonnables (site statique).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

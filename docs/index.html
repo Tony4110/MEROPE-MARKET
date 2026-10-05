@@ -42,15 +42,27 @@
   .nav a:hover{color:var(--accent)}
   .navcta{margin-left:auto;background:var(--accent);color:#fff;border-radius:9px;font-size:13px;font-weight:600;padding:8px 13px;text-decoration:none;white-space:nowrap}
   .tgl{background:none;border:1px solid var(--line);border-radius:999px;width:30px;height:30px;cursor:pointer;color:var(--muted);flex:none}
-  .hero{padding-block:46px 8px}
   .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--star)}
-  .hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,5.6vw,50px);line-height:1.04;margin:14px 0 12px;text-wrap:balance;max-width:20ch}
-  .hero p{font-size:17px;color:var(--muted);max-width:62ch;margin:0}
-  .stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:24px}
-  .stat .v{font-family:var(--font-display);font-weight:600;font-size:30px;font-variant-numeric:tabular-nums}
-  .stat .k{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+  /* hero — bande cosmique + motif Pléiades (Merope en or) */
+  .hero{position:relative;overflow:hidden;background:#0E1512;color:#EAF2EE;border-bottom:1px solid #243029}
+  .herobg{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(900px 420px at 80% -15%, rgba(52,211,153,.16), transparent 62%),
+      radial-gradient(640px 320px at 12% 125%, rgba(227,194,90,.08), transparent 60%)}
+  .pleiades{position:absolute;top:22px;right:4%;width:320px;max-width:44vw;opacity:.92;z-index:2;pointer-events:none}
+  @media(max-width:720px){.pleiades{opacity:.5;width:220px;top:auto;bottom:-10px}}
+  .heroinner{position:relative;z-index:3;padding-block:60px 46px}
+  .hero .eyebrow{color:#E3C25A}
+  .hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(34px,6.4vw,62px);line-height:1.02;margin:16px 0 14px;text-wrap:balance;max-width:16ch;color:#F6F8F5}
+  .hero p{font-size:17px;color:#AEC2B8;max-width:60ch;margin:0}
+  .herocta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-block;background:#34D399;color:#0E1512;border-radius:10px;font-weight:600;font-size:14px;padding:12px 20px;text-decoration:none}
+  .btn.ghost{background:transparent;border:1px solid #2f4a3e;color:#EAF2EE}
+  .stats{display:flex;gap:30px;flex-wrap:wrap;margin-top:32px}
+  .stat .v{font-family:var(--font-display);font-weight:600;font-size:32px;font-variant-numeric:tabular-nums;color:#F6F8F5}
+  .stat .k{font-family:var(--font-mono);font-size:10.5px;color:#9DB0A7;text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+  #offres{scroll-margin-top:60px}
   /* filter menu: vertical / geography / specialization */
-  .filtermenu{position:sticky;top:57px;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-top:30px}
+  .filtermenu{position:sticky;top:57px;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .fm{padding-block:14px;display:flex;flex-direction:column;gap:10px}
   .frow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .frow .flabel{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:92px;flex:none}
@@ -119,21 +131,42 @@
 </div></header>
 
 <main>
-<div class="wrap">
   <section class="hero">
-    <div class="eyebrow">Founding Market Auctions · un réseau Dreamotion</div>
-    <h1>Revendiquez un marché d'intelligence.</h1>
-    <p>Chaque lot est une <b>licence de marché</b> — vertical × géographie × spécialisation. Vous enchérissez, votre offre finance l'<b>activation</b> (protocole, capteurs, 1er dataset, page d'index), et vous l'opérez en gardant 70 % des revenus. Un seul opérateur prioritaire par marché.</p>
-    <div class="stats">
-      <div class="stat"><div class="v" id="s-total">—</div><div class="k">Marchés au catalogue</div></div>
-      <div class="stat"><div class="v" id="s-auction">—</div><div class="k">En enchère</div></div>
-      <div class="stat"><div class="v">4</div><div class="k">Verticales</div></div>
-      <div class="stat"><div class="v">70%</div><div class="k">Part opérateur</div></div>
+    <div class="herobg"></div>
+    <svg class="pleiades" viewBox="0 0 320 230" aria-hidden="true">
+      <g stroke="#34D399" stroke-width="1" opacity=".28" fill="none">
+        <path d="M150 110 L120 150 M150 110 L120 82 M120 82 L100 102 M100 102 L92 72 M150 110 L205 150 M205 150 L214 134"/>
+      </g>
+      <g fill="#EAF2EE">
+        <circle cx="150" cy="110" r="3.4"/><circle cx="120" cy="82" r="2.6"/>
+        <circle cx="100" cy="102" r="2.5"/><circle cx="92" cy="72" r="2.1"/>
+        <circle cx="205" cy="150" r="2.8"/><circle cx="214" cy="134" r="2.1"/>
+        <circle cx="104" cy="56" r="1.8"/><circle cx="168" cy="70" r="1.7"/>
+        <circle cx="236" cy="96" r="1.6"/><circle cx="70" cy="128" r="1.5"/>
+        <circle cx="250" cy="170" r="1.5"/><circle cx="135" cy="188" r="1.6"/>
+      </g>
+      <circle cx="120" cy="150" r="10" fill="#E3C25A" opacity=".18"/>
+      <circle cx="120" cy="150" r="4.1" fill="#E3C25A"/>
+      <text x="120" y="172" text-anchor="middle" fill="#E3C25A" font-family="'IBM Plex Mono',monospace" font-size="9" opacity=".85" letter-spacing="1.5">MEROPE</text>
+    </svg>
+    <div class="wrap heroinner">
+      <div class="eyebrow">Founding Market Auctions · un réseau Dreamotion</div>
+      <h1>Revendiquez un marché d'intelligence.</h1>
+      <p>Chaque lot est une <b style="color:#EAF2EE">licence de marché</b> — vertical × géographie × spécialisation. Vous enchérissez, votre offre finance l'activation, et vous l'opérez en gardant <b style="color:#EAF2EE">70 % des revenus</b>. Un seul opérateur prioritaire par marché.</p>
+      <div class="herocta">
+        <a class="btn" href="#offres">Voir les enchères ↓</a>
+        <a class="btn ghost" href="portal/">Créer mon espace</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="v" id="s-total">—</div><div class="k">Marchés au catalogue</div></div>
+        <div class="stat"><div class="v" id="s-auction">—</div><div class="k">En enchère</div></div>
+        <div class="stat"><div class="v">4</div><div class="k">Verticales</div></div>
+        <div class="stat"><div class="v">70%</div><div class="k">Part opérateur</div></div>
+      </div>
     </div>
   </section>
-</div>
 
-<div class="filtermenu"><div class="wrap fm">
+<div class="filtermenu" id="offres"><div class="wrap fm">
   <div class="frow"><span class="flabel">Verticale</span><div class="chips" id="f-vertical"></div></div>
   <div class="frow"><span class="flabel">Géographie</span><div class="chips" id="f-geo"></div></div>
   <div class="frow"><span class="flabel">Spécialisation</span><input class="search" id="f-spec" type="search" placeholder="Rechercher (data centers, battery, tokenized…)"></div>

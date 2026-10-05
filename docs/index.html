@@ -167,9 +167,9 @@
   </section>
 
 <div class="filtermenu" id="offres"><div class="wrap fm">
-  <select class="fsel" id="f-vertical" aria-label="Verticale"></select>
+  <div class="chips" id="f-vertical"></div>
   <select class="fsel" id="f-geo" aria-label="Géographie"></select>
-  <input class="search" id="f-spec" type="search" placeholder="Spécialisation : data centers, battery, tokenized…">
+  <input class="search" id="f-spec" type="search" placeholder="Rechercher une spécialisation…">
 </div></div>
 
 <div class="wrap">
@@ -258,15 +258,14 @@ function render(){
   }).join('');
 }
 function buildFilters(){
-  const vmap={ALL:'Toutes verticales',SPACE:'Space',AI:'AI',FINANCE:'Finance',ENERGY:'Energy'};
-  const vsel=document.getElementById('f-vertical');
-  vsel.innerHTML=['ALL','SPACE','AI','FINANCE','ENERGY'].map(v=>`<option value="${v}">${vmap[v]}</option>`).join('');
-  vsel.value=FV;
+  const vmap={ALL:'Toutes',SPACE:'🌌 Space',AI:'🤖 AI',FINANCE:'💰 Finance',ENERGY:'⚡ Energy'};
+  const vc=document.getElementById('f-vertical');
+  vc.innerHTML=['ALL','SPACE','AI','FINANCE','ENERGY'].map(v=>`<button class="chip ${v===FV?'on':''}" data-v="${v}">${vmap[v]}</button>`).join('');
+  vc.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{FV=c.dataset.v;buildFilters();render();});
   const geos=['ALL',...Array.from(new Set(ALL.map(m=>m.geography))).sort()];
   const gsel=document.getElementById('f-geo');
   gsel.innerHTML=geos.map(g=>`<option value="${esc(g)}">${g==='ALL'?'Toutes géographies':esc(g)}</option>`).join('');
   gsel.value=FG;
-  vsel.onchange=()=>{FV=vsel.value;render();};
   gsel.onchange=()=>{FG=gsel.value;render();};
 }
 document.getElementById('f-spec').addEventListener('input',e=>{Q=e.target.value;render();});

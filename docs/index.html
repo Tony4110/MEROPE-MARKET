@@ -159,7 +159,7 @@
       <div class="stats">
         <div class="stat"><div class="v" id="s-total">—</div><div class="k">Marchés au catalogue</div></div>
         <div class="stat"><div class="v" id="s-auction">—</div><div class="k">En enchère</div></div>
-        <div class="stat"><div class="v" id="s-ops">—</div><div class="k">Opérateurs actifs</div></div>
+        <div class="stat"><div class="v">4</div><div class="k">Indices en opération</div></div>
         <div class="stat"><div class="v">70%</div><div class="k">Part opérateur</div></div>
       </div>
     </div>
@@ -271,7 +271,6 @@ async function load(){
     ALL=await sb('market_opportunities?select=code,vertical,geography,specialization,slug,tier,starting_bid_eur,status,sort_order&order=sort_order.asc');
     document.getElementById('s-total').textContent=ALL.length;
     document.getElementById('s-auction').textContent=ALL.filter(m=>m.status==='auction').length;
-    try{ const ops=await sb('operators?select=id&status=eq.active'); document.getElementById('s-ops').textContent=ops.length; }catch(e){ document.getElementById('s-ops').textContent='—'; }
     renderFilters();render();
   }catch(e){document.getElementById('grid').innerHTML=`<div class="state err">Catalogue indisponible — ${esc(e.message)}. (As-tu lancé INSTALL 04 ?)</div>`;}
 }

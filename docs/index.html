@@ -63,7 +63,8 @@
   #offres{scroll-margin-top:60px}
   /* filter menu: vertical / geography / specialization */
   .filtermenu{position:sticky;top:57px;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .fm{padding-block:14px;display:flex;flex-direction:column;gap:10px}
+  .fm{padding-block:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .fsel{appearance:auto;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;color:var(--fg);cursor:pointer}
   .frow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .frow .flabel{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:92px;flex:none}
   .chips{display:flex;gap:7px;flex-wrap:wrap}
@@ -166,9 +167,9 @@
   </section>
 
 <div class="filtermenu" id="offres"><div class="wrap fm">
-  <div class="frow"><span class="flabel">Verticale</span><div class="chips" id="f-vertical"></div></div>
-  <div class="frow"><span class="flabel">Géographie</span><div class="chips" id="f-geo"></div></div>
-  <div class="frow"><span class="flabel">Spécialisation</span><input class="search" id="f-spec" type="search" placeholder="Rechercher (data centers, battery, tokenized…)"></div>
+  <select class="fsel" id="f-vertical" aria-label="Verticale"></select>
+  <select class="fsel" id="f-geo" aria-label="Géographie"></select>
+  <input class="search" id="f-spec" type="search" placeholder="Spécialisation : data centers, battery, tokenized…">
 </div></div>
 
 <div class="wrap">
@@ -256,13 +257,17 @@ function render(){
     </article>`;
   }).join('');
 }
-function renderFilters(){
-  const vs=['ALL','SPACE','AI','FINANCE','ENERGY'];
-  document.getElementById('f-vertical').innerHTML=vs.map(v=>`<button class="chip ${v===FV?'on':''}" data-v="${v}">${v==='ALL'?'Toutes':VLABEL[v]}</button>`).join('');
+function buildFilters(){
+  const vmap={ALL:'Toutes verticales',SPACE:'Space',AI:'AI',FINANCE:'Finance',ENERGY:'Energy'};
+  const vsel=document.getElementById('f-vertical');
+  vsel.innerHTML=['ALL','SPACE','AI','FINANCE','ENERGY'].map(v=>`<option value="${v}">${vmap[v]}</option>`).join('');
+  vsel.value=FV;
   const geos=['ALL',...Array.from(new Set(ALL.map(m=>m.geography))).sort()];
-  document.getElementById('f-geo').innerHTML=geos.map(g=>`<button class="chip ${g===FG?'on':''}" data-g="${esc(g)}">${g==='ALL'?'Toutes':esc(g)}</button>`).join('');
-  document.querySelectorAll('#f-vertical .chip').forEach(c=>c.onclick=()=>{FV=c.dataset.v;renderFilters();render();});
-  document.querySelectorAll('#f-geo .chip').forEach(c=>c.onclick=()=>{FG=c.dataset.g;renderFilters();render();});
+  const gsel=document.getElementById('f-geo');
+  gsel.innerHTML=geos.map(g=>`<option value="${esc(g)}">${g==='ALL'?'Toutes géographies':esc(g)}</option>`).join('');
+  gsel.value=FG;
+  vsel.onchange=()=>{FV=vsel.value;render();};
+  gsel.onchange=()=>{FG=gsel.value;render();};
 }
 document.getElementById('f-spec').addEventListener('input',e=>{Q=e.target.value;render();});
 
@@ -271,7 +276,7 @@ async function load(){
     ALL=await sb('market_opportunities?select=code,vertical,geography,specialization,slug,tier,starting_bid_eur,status,sort_order&order=sort_order.asc');
     document.getElementById('s-total').textContent=ALL.length;
     document.getElementById('s-auction').textContent=ALL.filter(m=>m.status==='auction').length;
-    renderFilters();render();
+    buildFilters();render();
   }catch(e){document.getElementById('grid').innerHTML=`<div class="state err">Catalogue indisponible — ${esc(e.message)}. (As-tu lancé INSTALL 04 ?)</div>`;}
 }
 load();

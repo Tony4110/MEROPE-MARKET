@@ -57,8 +57,9 @@
   .herocta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
   .btn{display:inline-block;background:#34D399;color:#0E1512;border-radius:10px;font-weight:600;font-size:14px;padding:12px 20px;text-decoration:none}
   .btn.ghost{background:transparent;border:1px solid #2f4a3e;color:#EAF2EE}
-  .stats{display:flex;gap:22px;flex-wrap:wrap;margin-top:24px}
-  .stat .v{font-family:var(--font-display);font-weight:600;font-size:24px;font-variant-numeric:tabular-nums;color:#F6F8F5}
+  .stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:24px}
+  .stat{display:flex;flex-direction:column;align-items:flex-start}
+  .stat .v{font-family:var(--font-display);font-weight:600;font-size:24px;font-variant-numeric:tabular-nums;color:#F6F8F5;line-height:1.1}
   .stat .k{font-family:var(--font-mono);font-size:10px;color:#9DB0A7;text-transform:uppercase;letter-spacing:.07em;margin-top:1px}
   #offres{scroll-margin-top:60px}
   /* filter menu: vertical / geography / specialization */
@@ -123,11 +124,12 @@
 <header><div class="wrap hd">
   <a class="brand" href="./"><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l2.2 7.1 7.3.1-5.9 4.4 2.2 7-5.8-4.3L6.2 20l2.2-7L2.5 8.7l7.3-.1L12 1.5z" fill="var(--star)"/></svg><b>Merope</b></a>
   <nav class="nav">
-    <a href="secondary/">Marché secondaire</a>
-    <a href="#comment">Comment ça marche</a>
-    <a href="portal/">Mon espace</a>
+    <a href="secondary/" data-i18n="nav_secondary">Marché secondaire</a>
+    <a href="#comment" data-i18n="nav_how">Comment ça marche</a>
+    <a href="portal/" data-i18n="nav_space">Mon espace</a>
   </nav>
-  <a class="navcta" href="portal/">Créer mon espace</a>
+  <a class="navcta" href="portal/" data-i18n="nav_cta">Créer mon espace</a>
+  <button class="tgl" id="lang" title="Language" style="width:auto;padding:0 11px;font-family:var(--font-mono);font-size:11px">EN</button>
   <button class="tgl" id="tgl" title="Thème">◐</button>
 </div></header>
 
@@ -151,53 +153,52 @@
       <text x="120" y="172" text-anchor="middle" fill="#E3C25A" font-family="'IBM Plex Mono',monospace" font-size="9" opacity=".85" letter-spacing="1.5">MEROPE</text>
     </svg>
     <div class="wrap heroinner">
-      <h1>Revendiquez un marché d'intelligence.</h1>
-      <p>Chaque lot est une <b style="color:#EAF2EE">licence de marché</b> — vertical × géographie × spécialisation. Vous enchérissez, votre offre finance l'activation, et vous l'opérez en gardant <b style="color:#EAF2EE">70 % des revenus</b>. Un seul opérateur prioritaire par marché.</p>
+      <h1 data-i18n="h1">Revendiquez un marché d'intelligence.</h1>
+      <p data-i18n-html="hero_p">Chaque lot est une <b style="color:#EAF2EE">licence de marché</b> — vertical × géographie × spécialisation. Vous enchérissez, votre offre finance l'activation, et vous l'opérez en gardant <b style="color:#EAF2EE">70 % des revenus</b>. Un seul opérateur prioritaire par marché.</p>
       <div class="herocta">
-        <a class="btn" href="#offres">Voir les enchères ↓</a>
-        <a class="btn ghost" href="portal/">Créer mon espace</a>
+        <a class="btn" href="#offres" data-i18n="btn_see">Voir les enchères ↓</a>
+        <a class="btn ghost" href="portal/" data-i18n="btn_space">Créer mon espace</a>
       </div>
       <div class="stats">
-        <div class="stat"><div class="v" id="s-total">—</div><div class="k">Marchés au catalogue</div></div>
-        <div class="stat"><div class="v" id="s-auction">—</div><div class="k">En enchère</div></div>
-        <div class="stat"><div class="v">4</div><div class="k">Indices en opération</div></div>
-        <div class="stat"><div class="v">70%</div><div class="k">Part opérateur</div></div>
+        <div class="stat"><div class="v" id="s-total">—</div><div class="k" data-i18n="st_auctions">Enchères</div></div>
+        <div class="stat"><div class="v">4</div><div class="k" data-i18n="st_active">Marchés actifs</div></div>
+        <div class="stat"><div class="v">70%</div><div class="k" data-i18n="st_share">Part opérateur</div></div>
       </div>
     </div>
   </section>
 
 <div class="filtermenu" id="offres"><div class="wrap fm">
   <div class="chips" id="f-vertical"></div>
-  <input class="search" id="f-geo" type="search" placeholder="Rechercher une géographie (Europe, Global, Germany…)">
+  <input class="search" id="f-geo" type="search" data-i18n-ph="geo_ph" placeholder="Rechercher une géographie (Europe, Global, Germany…)">
 </div></div>
 
 <div class="wrap">
   <div class="count" id="count"></div>
-  <div class="grid" id="grid"><div class="state">Chargement du catalogue…</div></div>
+  <div class="grid" id="grid"><div class="state" data-i18n="loading">Chargement du catalogue…</div></div>
 
-  <div class="lab" id="comment">Comment ça marche</div>
+  <div class="lab" id="comment" data-i18n="lab_how">Comment ça marche</div>
   <section class="how">
-    <div class="hw"><div class="n">01 · ENCHÈRE</div><h4>Revendiquez</h4><p>Vous enchérissez sur un marché vertical × géographie × spécialisation.</p></div>
-    <div class="hw"><div class="n">02 · ACTIVATION</div><h4>On construit</h4><p>Votre offre finance protocole, capteurs, 1er dataset et votre page d'index.</p></div>
-    <div class="hw"><div class="n">03 · OPÉRATION</div><h4>Vous enrichissez</h4><p>Vous validez les observations ; l'OS Merope structure et historise.</p></div>
-    <div class="hw"><div class="n">04 · REVENUS</div><h4>Vous monétisez</h4><p>Vos datasets se vendent dans la marketplace. 70 % pour l'opérateur.</p></div>
+    <div class="hw"><div class="n" data-i18n="hw1n">01 · ENCHÈRE</div><h4 data-i18n="hw1t">Revendiquez</h4><p data-i18n="hw1p">Vous enchérissez sur un marché vertical × géographie × spécialisation.</p></div>
+    <div class="hw"><div class="n" data-i18n="hw2n">02 · ACTIVATION</div><h4 data-i18n="hw2t">On construit</h4><p data-i18n="hw2p">Votre offre finance protocole, capteurs, 1er dataset et votre page d'index.</p></div>
+    <div class="hw"><div class="n" data-i18n="hw3n">03 · OPÉRATION</div><h4 data-i18n="hw3t">Vous enrichissez</h4><p data-i18n="hw3p">Vous validez les observations ; l'OS Merope structure et historise.</p></div>
+    <div class="hw"><div class="n" data-i18n="hw4n">04 · REVENUS</div><h4 data-i18n="hw4t">Vous monétisez</h4><p data-i18n="hw4p">Vos datasets se vendent dans la marketplace. 70 % pour l'opérateur.</p></div>
   </section>
 
-  <div class="lab">Nos indices déjà en opération — la preuve</div>
+  <div class="lab" data-i18n="lab_proof">Nos indices déjà en opération — la preuve</div>
   <section class="indices">
-    <div class="ix"><div class="live">en ligne</div><b>Alcyone</b><p>Space Economy Index — capture quotidienne.</p><a href="https://alcyone.network/" target="_blank" rel="noopener">alcyone.network →</a></div>
-    <div class="ix"><div class="live">en ligne</div><b>RWA</b><p>Tokenisation &amp; actifs du monde réel.</p><a href="https://rwa-intelligence.netlify.app/" target="_blank" rel="noopener">voir le site →</a></div>
-    <div class="ix"><div class="live">en ligne</div><b>Electra</b><p>L'index des agents IA.</p><a href="https://electraindex.com/" target="_blank" rel="noopener">electraindex.com →</a></div>
-    <div class="ix"><div class="live">en ligne</div><b>Maia</b><p>Longevity Index.</p><a href="https://maiaindex.com/" target="_blank" rel="noopener">maiaindex.com →</a></div>
+    <div class="ix"><div class="live" data-i18n="live">en ligne</div><b>Alcyone</b><p data-i18n="ix_alcyone">Space Economy Index — capture quotidienne.</p><a href="https://alcyone.network/" target="_blank" rel="noopener">alcyone.network →</a></div>
+    <div class="ix"><div class="live" data-i18n="live">en ligne</div><b>RWA</b><p data-i18n="ix_rwa">Tokenisation &amp; actifs du monde réel.</p><a href="https://rwa-intelligence.netlify.app/" target="_blank" rel="noopener" data-i18n="link_site">voir le site →</a></div>
+    <div class="ix"><div class="live" data-i18n="live">en ligne</div><b>Electra</b><p data-i18n="ix_electra">L'index des agents IA.</p><a href="https://electraindex.com/" target="_blank" rel="noopener">electraindex.com →</a></div>
+    <div class="ix"><div class="live" data-i18n="live">en ligne</div><b>Maia</b><p data-i18n="ix_maia">Longevity Index.</p><a href="https://maiaindex.com/" target="_blank" rel="noopener">maiaindex.com →</a></div>
   </section>
 
-  <div class="honest">
+  <div class="honest" data-i18n-html="honest">
     <b>En toute transparence :</b> l'opérateur acquiert une <b>licence prioritaire</b> + les droits commerciaux, pas la propriété du marché ni de la donnée publique. La priorité est conditionnée à l'opération (un marché inactif est re-listé). Prototype : l'enchère démarre en offre scellée ; aucun paiement n'est encore traité ici.
   </div>
 </div>
 </main>
 
-<footer><div class="wrap">
+<footer><div class="wrap" data-i18n-html="footer">
   Merope · révéler les marchés cachés — un réseau Dreamotion. Rare market allocation, pas un abonnement.<br>
   Données servies en direct depuis l'OS Merope. © Dreamotion OÜ.
 </div></footer>
@@ -218,16 +219,68 @@ async function sb(path){
   return r.json();
 }
 const STATUS_ORDER={auction:0,open:1,coming_soon:2,reserved:3,taken:4};
-const STATUS={auction:{d:'d-auction',t:'En enchère'},open:{d:'d-open',t:'Disponible'},coming_soon:{d:'d-coming',t:'Bientôt'},reserved:{d:'d-reserved',t:'Réservé · sur invitation'},taken:{d:'d-reserved',t:'Attribué'}};
-const VLABEL={SPACE:'🌌 Space',AI:'🤖 AI',FINANCE:'💰 Finance',ENERGY:'⚡ Energy'};
-let ALL=[], FV='ALL', FG='ALL', Q='';
+const STATUS={auction:{d:'d-auction',k:'st_auction'},open:{d:'d-open',k:'st_available'},coming_soon:{d:'d-coming',k:'st_soon'},reserved:{d:'d-reserved',k:'st_reserved'},taken:{d:'d-reserved',k:'st_taken'}};
+let ALL=[], FV='ALL', Q='';
+
+/* ---- i18n FR/EN ---- */
+const DICT={
+ fr:{nav_secondary:'Marché secondaire',nav_how:'Comment ça marche',nav_space:'Mon espace',nav_cta:'Créer mon espace',
+   h1:"Revendiquez un marché d'intelligence.",
+   hero_p:'Chaque lot est une <b style="color:#EAF2EE">licence de marché</b> — vertical × géographie × spécialisation. Vous enchérissez, votre offre finance l\'activation, et vous l\'opérez en gardant <b style="color:#EAF2EE">70 % des revenus</b>. Un seul opérateur prioritaire par marché.',
+   btn_see:'Voir les enchères ↓',btn_space:'Créer mon espace',
+   st_auctions:'Enchères',st_active:'Marchés actifs',st_share:'Part opérateur',
+   geo_ph:'Rechercher une géographie (Europe, Global, Germany…)',
+   lab_how:'Comment ça marche',
+   hw1n:'01 · ENCHÈRE',hw1t:'Revendiquez',hw1p:'Vous enchérissez sur un marché vertical × géographie × spécialisation.',
+   hw2n:'02 · ACTIVATION',hw2t:'On construit',hw2p:'Votre offre finance protocole, capteurs, 1er dataset et votre page d\'index.',
+   hw3n:'03 · OPÉRATION',hw3t:'Vous enrichissez',hw3p:'Vous validez les observations ; l\'OS Merope structure et historise.',
+   hw4n:'04 · REVENUS',hw4t:'Vous monétisez',hw4p:'Vos datasets se vendent dans la marketplace. 70 % pour l\'opérateur.',
+   lab_proof:'Nos indices déjà en opération — la preuve',live:'en ligne',
+   ix_alcyone:'Space Economy Index — capture quotidienne.',ix_rwa:'Tokenisation & actifs du monde réel.',ix_electra:"L'index des agents IA.",ix_maia:'Longevity Index.',link_site:'voir le site →',
+   honest:'<b>En toute transparence :</b> l\'opérateur acquiert une <b>licence prioritaire</b> + les droits commerciaux, pas la propriété du marché ni de la donnée publique. La priorité est conditionnée à l\'opération (un marché inactif est re-listé). Prototype : l\'enchère démarre en offre scellée ; aucun paiement n\'est encore traité ici.',
+   footer:'Merope · révéler les marchés cachés — un réseau Dreamotion. Rare market allocation, pas un abonnement.<br>Données servies en direct depuis l\'OS Merope. © Dreamotion OÜ.',
+   loading:'Chargement du catalogue…',empty:'Aucun marché pour ce filtre.',all:'Toutes',count:'{n} marchés affichés',
+   st_auction:'En enchère',st_available:'Disponible',st_soon:'Bientôt',st_reserved:'Réservé · sur invitation',st_taken:'Attribué',
+   bid_start:'Enchère de départ',bid_alloc:'Allocation stratégique',bid_from:'Départ',
+   cta_bid:'Enchérir →',cta_reserve:'Réserver →',cta_notify:'M\'alerter',cta_invite:'Sur invitation',cta_taken:'Attribué'},
+ en:{nav_secondary:'Secondary market',nav_how:'How it works',nav_space:'My space',nav_cta:'Create my space',
+   h1:'Claim a market of intelligence.',
+   hero_p:'Each lot is a <b style="color:#EAF2EE">market license</b> — vertical × geography × specialization. You bid, your offer funds activation, and you operate it keeping <b style="color:#EAF2EE">70% of revenue</b>. One priority operator per market.',
+   btn_see:'See the auctions ↓',btn_space:'Create my space',
+   st_auctions:'Auctions',st_active:'Active markets',st_share:'Operator share',
+   geo_ph:'Search a geography (Europe, Global, Germany…)',
+   lab_how:'How it works',
+   hw1n:'01 · BID',hw1t:'Claim',hw1p:'You bid on a vertical × geography × specialization market.',
+   hw2n:'02 · ACTIVATION',hw2t:'We build',hw2p:'Your offer funds the protocol, sensors, first dataset and your index page.',
+   hw3n:'03 · OPERATE',hw3t:'You enrich',hw3p:'You validate observations; the Merope OS structures and historizes.',
+   hw4n:'04 · REVENUE',hw4t:'You monetize',hw4p:'Your datasets sell in the marketplace. 70% to the operator.',
+   lab_proof:'Our indexes already live — the proof',live:'live',
+   ix_alcyone:'Space Economy Index — daily capture.',ix_rwa:'Tokenization & real-world assets.',ix_electra:'The AI agents index.',ix_maia:'Longevity Index.',link_site:'visit site →',
+   honest:'<b>Full transparency:</b> the operator acquires a <b>priority license</b> + commercial rights, not ownership of the market nor of the public data. Priority is conditioned on operating (an inactive market is re-listed). Prototype: auctions start as sealed bids; no payment is processed here yet.',
+   footer:'Merope · revealing hidden markets — a Dreamotion network. Rare market allocation, not a subscription.<br>Data served live from the Merope OS. © Dreamotion OÜ.',
+   loading:'Loading the catalogue…',empty:'No market for this filter.',all:'All',count:'{n} markets shown',
+   st_auction:'In auction',st_available:'Available',st_soon:'Soon',st_reserved:'Reserved · by invitation',st_taken:'Allocated',
+   bid_start:'Starting bid',bid_alloc:'Strategic allocation',bid_from:'Start',
+   cta_bid:'Bid →',cta_reserve:'Reserve →',cta_notify:'Notify me',cta_invite:'By invitation',cta_taken:'Allocated'}
+};
+let lang='fr';
+try{const s=localStorage.getItem('merope-lang'); if(s==='fr'||s==='en')lang=s;}catch(e){}
+const L=k=>((DICT[lang]&&DICT[lang][k])!=null?DICT[lang][k]:(DICT.fr[k]!=null?DICT.fr[k]:k));
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=L(el.getAttribute('data-i18n')));
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>el.innerHTML=L(el.getAttribute('data-i18n-html')));
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>el.setAttribute('placeholder',L(el.getAttribute('data-i18n-ph'))));
+  document.documentElement.lang=lang;
+  const lb=document.getElementById('lang'); if(lb)lb.textContent=(lang==='fr'?'EN':'FR');
+}
+document.getElementById('lang').onclick=()=>{ lang=(lang==='fr'?'en':'fr'); try{localStorage.setItem('merope-lang',lang);}catch(e){} applyI18n(); buildFilters(); render(); };
 
 function cta(m){
-  if(m.status==='auction') return `<a class="act" href="portal/?bid=${encodeURIComponent(m.slug)}">Enchérir →</a>`;
-  if(m.status==='open')    return `<a class="act" href="portal/?bid=${encodeURIComponent(m.slug)}">Réserver →</a>`;
-  if(m.status==='coming_soon') return `<a class="act ghost" href="portal/">M'alerter</a>`;
-  if(m.status==='reserved') return `<span class="act muted">Sur invitation</span>`;
-  return `<span class="act muted">Attribué</span>`;
+  if(m.status==='auction') return `<a class="act" href="portal/?bid=${encodeURIComponent(m.slug)}">${L('cta_bid')}</a>`;
+  if(m.status==='open')    return `<a class="act" href="portal/?bid=${encodeURIComponent(m.slug)}">${L('cta_reserve')}</a>`;
+  if(m.status==='coming_soon') return `<a class="act ghost" href="portal/">${L('cta_notify')}</a>`;
+  if(m.status==='reserved') return `<span class="act muted">${L('cta_invite')}</span>`;
+  return `<span class="act muted">${L('cta_taken')}</span>`;
 }
 function matches(m){
   if(FV!=='ALL'&&m.vertical!==FV)return false;
@@ -237,17 +290,17 @@ function matches(m){
 function render(){
   const grid=document.getElementById('grid');
   const list=ALL.filter(matches).sort((a,b)=>(STATUS_ORDER[a.status]-STATUS_ORDER[b.status])||(a.sort_order-b.sort_order));
-  document.getElementById('count').textContent=`${list.length} marché${list.length>1?'s':''} affiché${list.length>1?'s':''}`;
-  if(!list.length){grid.innerHTML='<div class="state">Aucun marché pour ce filtre.</div>';return;}
+  document.getElementById('count').textContent=L('count').replace('{n}',list.length);
+  if(!list.length){grid.innerHTML=`<div class="state">${esc(L('empty'))}</div>`;return;}
   grid.innerHTML=list.map(m=>{
     const st=STATUS[m.status]||STATUS.coming_soon;
-    const bidLabel=m.status==='auction'?'Enchère de départ':(m.status==='reserved'?'Allocation stratégique':'Départ');
+    const bidLabel=L(m.status==='auction'?'bid_start':(m.status==='reserved'?'bid_alloc':'bid_from'));
     return `<article class="card">
       <span class="rail r-${esc(m.tier)}"></span>
       <div class="toprow"><span class="vtag">${esc(m.vertical)}</span><span class="tier ${esc(m.tier)}">${esc(m.tier)}</span></div>
       <h3>${esc(m.specialization)}</h3>
       <div class="geo">${esc(m.geography)} · ${esc(m.code)}</div>
-      <div class="statusline"><span class="dot ${st.d}"></span>${esc(st.t)}</div>
+      <div class="statusline"><span class="dot ${st.d}"></span>${esc(L(st.k))}</div>
       <div class="bidrow">
         <div class="bid"><div class="k">${esc(bidLabel)}</div><div class="v">${eur(m.starting_bid_eur)}</div></div>
         ${cta(m)}
@@ -256,7 +309,7 @@ function render(){
   }).join('');
 }
 function buildFilters(){
-  const vmap={ALL:'Toutes',SPACE:'🌌 Space',AI:'🤖 AI',FINANCE:'💰 Finance',ENERGY:'⚡ Energy'};
+  const vmap={ALL:L('all'),SPACE:'🌌 Space',AI:'🤖 AI',FINANCE:'💰 Finance',ENERGY:'⚡ Energy'};
   const vc=document.getElementById('f-vertical');
   vc.innerHTML=['ALL','SPACE','AI','FINANCE','ENERGY'].map(v=>`<button class="chip ${v===FV?'on':''}" data-v="${v}">${vmap[v]}</button>`).join('');
   vc.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{FV=c.dataset.v;buildFilters();render();});
@@ -264,12 +317,12 @@ function buildFilters(){
 document.getElementById('f-geo').addEventListener('input',e=>{Q=e.target.value;render();});
 
 async function load(){
+  applyI18n();
   try{
     ALL=await sb('market_opportunities?select=code,vertical,geography,specialization,slug,tier,starting_bid_eur,status,sort_order&order=sort_order.asc');
     document.getElementById('s-total').textContent=ALL.length;
-    document.getElementById('s-auction').textContent=ALL.filter(m=>m.status==='auction').length;
     buildFilters();render();
-  }catch(e){document.getElementById('grid').innerHTML=`<div class="state err">Catalogue indisponible — ${esc(e.message)}. (As-tu lancé INSTALL 04 ?)</div>`;}
+  }catch(e){document.getElementById('grid').innerHTML=`<div class="state err">Catalogue indisponible — ${esc(e.message)}.</div>`;}
 }
 load();
 </script>

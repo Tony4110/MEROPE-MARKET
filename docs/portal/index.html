@@ -168,6 +168,7 @@ function renderLogin(){
 /* ---------- DASHBOARD VIEW ---------- */
 async function renderDashboard(session){
   const uid=session.user.id, email=session.user.email;
+  const BID=new URLSearchParams(location.search).get('bid');
   hdright.innerHTML=`<span class="umail">${esc(email)}</span><button class="lnk" id="out">Déconnexion</button><button class="tgl" id="tgl2" title="Thème">◐</button>`;
   document.getElementById('out').onclick=async()=>{await sb.auth.signOut();};
   document.getElementById('tgl2').onclick=tgl.onclick;
@@ -202,6 +203,8 @@ async function renderDashboard(session){
     <h1>Votre espace opérateur.</h1>
     <p class="sub">Voici votre futur marché et le chemin pour le mettre en production. <span class="badge ${status}">${esc(statusLabel)}</span></p>
 
+    ${BID ? `<div class="panel"><div class="lab">Enchérir — offre scellée</div><div id="bidzone"><div class="note">Chargement du marché…</div></div></div>` : ''}
+
     <div class="panel">
       <div class="lab">Votre marché × territoire</div>
       <div id="marketzone"></div>
@@ -214,10 +217,61 @@ async function renderDashboard(session){
     </div>
 
     <div class="panel">
+      <div class="lab">Mes offres</div>
+      <div id="mybids"><div class="note">—</div></div>
+    </div>
+
+    <div class="panel">
       <div class="lab">Votre futur site</div>
       <p class="sub" style="margin-bottom:12px">Vos datasets apparaîtront dans la marketplace Merope, sous votre nom d’opérateur. Voici la vitrine en direct :</p>
       <a class="site" href="../" target="_blank" rel="noopener">Ouvrir la marketplace Merope →</a>
     </div>`;
+
+  /* --- enchères --- */
+  async function loadMyBids(){
+    const el=document.getElementById('mybids'); if(!el)return;
+    try{
+      const {data}=await sb.from('bids').select('amount_eur,status,created_at,market_opportunities(specialization,vertical,geography)').eq('user_id',uid).order('created_at',{ascending:false});
+      if(!data||!data.length){ el.innerHTML='<div class="note">Aucune offre pour l\'instant.</div>'; return; }
+      el.innerHTML=data.map(b=>{
+        const mk=b.market_opportunities;
+        const sl={submitted:'En lice',shortlisted:'Présélectionné',won:'Gagné ✓',declined:'Refusé',withdrawn:'Retiré'}[b.status]||b.status;
+        return `<div class="reqrow"><b>${esc(mk?mk.specialization:'—')}</b> · ${esc(mk?mk.vertical:'')} &nbsp;<span style="font-family:var(--font-mono);font-size:12px">€${Number(b.amount_eur).toLocaleString('fr-FR')}</span> <span class="badge ${b.status==='won'?'confirmed':'requested'}" style="margin-left:auto">${esc(sl)}</span></div>`;
+      }).join('');
+    }catch(e){ el.innerHTML=`<div class="note">${esc(e.message||e)}</div>`; }
+  }
+  async function renderBid(){
+    const bz=document.getElementById('bidzone'); if(!bz)return;
+    try{
+      const {data:opp}=await sb.from('market_opportunities').select('id,vertical,geography,specialization,tier,starting_bid_eur,status').eq('slug',BID).maybeSingle();
+      if(!opp){ bz.innerHTML='<div class="msg err">Marché introuvable.</div>'; return; }
+      if(opp.status!=='auction'&&opp.status!=='open'){ bz.innerHTML=`<div class="note">Ce marché n'est pas ouvert aux offres (statut : ${esc(opp.status)}).</div>`; return; }
+      const reserve=Number(opp.starting_bid_eur)||0;
+      bz.innerHTML=`
+        <div class="reqrow"><b>${esc(opp.specialization)}</b> · ${esc(opp.vertical)} / ${esc(opp.geography)} <span class="badge requested" style="margin-left:auto">${esc(opp.tier)}</span></div>
+        <label for="bidamt">Votre offre (€) — minimum ${reserve.toLocaleString('fr-FR')}</label>
+        <input id="bidamt" type="number" min="${reserve}" step="10" value="${reserve}">
+        <label for="bidnote" style="margin-top:10px">Note (optionnel)</label>
+        <input id="bidnote" type="text" placeholder="Votre expérience du marché, territoire visé…">
+        <button class="btn" id="bidsend">Soumettre mon offre scellée</button>
+        <div id="bidmsg"></div>
+        <div class="note">Offre scellée : les autres ne la voient pas. Dreamotion valide le gagnant. Aucun paiement à ce stade.</div>`;
+      const amt=document.getElementById('bidamt'), note=document.getElementById('bidnote'), btn=document.getElementById('bidsend'), m=document.getElementById('bidmsg');
+      btn.onclick=async()=>{
+        const v=Number(amt.value);
+        if(!v||v<reserve){ m.className='msg err'; m.textContent='Votre offre doit être ≥ '+reserve.toLocaleString('fr-FR')+' €.'; return; }
+        btn.disabled=true; btn.textContent='Envoi…'; m.textContent='';
+        try{
+          const {error}=await sb.from('bids').insert({opportunity_id:opp.id,user_id:uid,email,amount_eur:v,note:note.value||null});
+          if(error)throw error;
+          m.className='msg ok'; m.textContent='Offre soumise ✓ Dreamotion revient vers vous.';
+          loadMyBids();
+        }catch(e){ m.className='msg err'; m.textContent='Erreur : '+esc(e.message||e); btn.disabled=false; btn.textContent='Soumettre mon offre scellée'; }
+      };
+    }catch(e){ bz.innerHTML=`<div class="msg err">${esc(e.message||e)}</div>`; }
+  }
+  if(BID) renderBid();
+  loadMyBids();
 
   /* --- steps --- */
   const stepsEl=document.getElementById('steps');

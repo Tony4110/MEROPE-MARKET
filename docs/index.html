@@ -223,8 +223,8 @@ const VLABEL={SPACE:'🌌 Space',AI:'🤖 AI',FINANCE:'💰 Finance',ENERGY:'⚡
 let ALL=[], FV='ALL', FG='ALL', Q='';
 
 function cta(m){
-  if(m.status==='auction') return `<a class="act" href="portal/">Enchérir →</a>`;
-  if(m.status==='open')    return `<a class="act" href="portal/">Réserver →</a>`;
+  if(m.status==='auction') return `<a class="act" href="portal/?bid=${encodeURIComponent(m.slug)}">Enchérir →</a>`;
+  if(m.status==='open')    return `<a class="act" href="portal/?bid=${encodeURIComponent(m.slug)}">Réserver →</a>`;
   if(m.status==='coming_soon') return `<a class="act ghost" href="portal/">M'alerter</a>`;
   if(m.status==='reserved') return `<span class="act muted">Sur invitation</span>`;
   return `<span class="act muted">Attribué</span>`;

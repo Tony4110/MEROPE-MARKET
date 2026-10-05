@@ -41,6 +41,29 @@
   .brand span{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);letter-spacing:.04em}
   .proto{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
   .tgl{background:none;border:1px solid var(--line);border-radius:999px;width:30px;height:30px;cursor:pointer;color:var(--muted);font-size:14px;flex:none}
+  /* nav */
+  .nav{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;margin-left:4px}
+  .nav a{color:var(--fg);text-decoration:none;padding:3px 0}
+  .nav a[aria-current]{color:var(--accent);font-weight:600}
+  .nav a:hover{color:var(--accent)}
+  .navcta{margin-left:auto;background:var(--accent);color:#fff;border-radius:9px;font-size:13px;font-weight:600;padding:8px 13px;text-decoration:none;white-space:nowrap}
+  /* indices en opération */
+  .indices{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:720px){.indices{grid-template-columns:repeat(2,1fr)}}
+  .ix{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:7px}
+  .ix .live{font-family:var(--font-mono);font-size:10px;color:var(--accent);display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.08em}
+  .ix .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .ix b{font-family:var(--font-display);font-weight:600;font-size:18px}
+  .ix p{font-size:12.5px;color:var(--muted);margin:0;flex:1;line-height:1.45}
+  .ix a{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-decoration:none}
+  /* comment ça marche */
+  #comment{scroll-margin-top:80px}
+  .how{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:720px){.how{grid-template-columns:1fr 1fr}}
+  .hw{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .hw .n{font-family:var(--font-mono);font-size:10px;color:var(--accent);letter-spacing:.08em}
+  .hw h4{font-family:var(--font-display);font-weight:600;font-size:15px;margin:6px 0 4px}
+  .hw p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.5}
   /* hero */
   .hero{padding:52px 0 8px}
   .hero .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
@@ -99,11 +122,17 @@
 </head>
 <body>
 <header><div class="wrap hd">
-  <a class="brand" href="#">
+  <a class="brand" href="./">
     <svg class="star" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 1.5l2.2 7.1 7.3.1-5.9 4.4 2.2 7-5.8-4.3L6.2 20l2.2-7L2.5 8.7l7.3-.1L12 1.5z" fill="var(--star)"/></svg>
-    <b>Merope</b><span>· révéler les marchés cachés</span>
+    <b>Merope</b>
   </a>
-  <span class="proto">Prototype</span>
+  <nav class="nav">
+    <a href="./" aria-current="page">Marketplace</a>
+    <a href="reserver/">Réserver un marché</a>
+    <a href="#comment">Comment ça marche</a>
+    <a href="portal/">Mon espace</a>
+  </nav>
+  <a class="navcta" href="reserver/">Réserver mon marché</a>
   <button class="tgl" id="tgl" title="Thème">◐</button>
 </div></header>
 
@@ -112,6 +141,22 @@
     <div class="eyebrow">Marketplace d'intelligence de marché</div>
     <h1>Les marchés cachés, rendus lisibles et achetables.</h1>
     <p>Merope transforme la donnée publique en intelligence vivante — des datasets historisés, capturés en continu et opérés par un réseau d'opérateurs de marché. Chaque produit ci-dessous est relié à un marché et à un opérateur réel.</p>
+  </section>
+
+  <div class="lab">Nos indices en opération</div>
+  <section class="indices">
+    <div class="ix"><div class="live">en ligne</div><b>Alcyone</b><p>Space Economy Index — capture quotidienne de l'économie spatiale.</p><a href="https://alcyone.network/" target="_blank" rel="noopener">alcyone.network →</a></div>
+    <div class="ix"><div class="live">en ligne</div><b>RWA</b><p>RealWorldAsset — tokenisation &amp; actifs du monde réel.</p><a href="https://rwa-intelligence.netlify.app/" target="_blank" rel="noopener">voir le site →</a></div>
+    <div class="ix"><div class="live">en ligne</div><b>Electra</b><p>L'index des agents IA — le « CoinMarketCap » des agents.</p><a href="https://electraindex.com/" target="_blank" rel="noopener">electraindex.com →</a></div>
+    <div class="ix"><div class="live">en ligne</div><b>Maia</b><p>Longevity Index — l'intelligence de la longévité.</p><a href="https://maiaindex.com/" target="_blank" rel="noopener">maiaindex.com →</a></div>
+  </section>
+
+  <div class="lab" id="comment">Comment ça marche</div>
+  <section class="how">
+    <div class="hw"><div class="n">01 · SOURCES</div><h4>Donnée publique</h4><p>API, documents, pages web : la matière première d'un marché.</p></div>
+    <div class="hw"><div class="n">02 · CAPTEURS</div><h4>Extraction continue</h4><p>Des capteurs planifiés collectent et historisent — sans serveur, sans site par marché.</p></div>
+    <div class="hw"><div class="n">03 · OS MEROPE</div><h4>Intelligence structurée</h4><p>Protocoles, snapshots, events, signals. L'historique est le moat.</p></div>
+    <div class="hw"><div class="n">04 · MARKETPLACE</div><h4>Vente &amp; revenus</h4><p>Les produits se vendent ici. L'opérateur touche 70 % des ventes.</p></div>
   </section>
 
   <div class="lab">Familles de marché corrélées</div>
@@ -126,9 +171,9 @@
   <div class="ops" id="operators"><div class="state">Chargement des opérateurs…</div></div>
 
   <section class="cta">
-    <h2>Devenez opérateur de marché</h2>
+    <h2>Réservez votre marché</h2>
     <p>Un marché × territoire vous est confié. Vous opérez l'intelligence, vous vendez vos datasets, vous gardez 70 % des revenus. Programme fondateur en cours.</p>
-    <a href="portal/" id="offerLink">Accéder à mon espace opérateur →</a>
+    <a href="reserver/" id="offerLink">Réserver un marché →</a>
   </section>
 </main>
 

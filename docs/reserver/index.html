@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Réserver un marché — Merope</title>
+<meta name="description" content="Opérez un marché × territoire sur Merope : l'infrastructure complète, 70 % des revenus. Programme fondateur.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F7F4; --surface:#FFFFFF; --surface-2:#FAFBFA; --fg:#14201C; --muted:#5A6A62;
+    --line:#E3E9E4; --accent:#0E7C5A; --accent-weak:#E4F1EA; --star:#A8781A; --ink:#101814;
+    --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+    --font-body:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#0E1512; --surface:#152019; --surface-2:#111A16; --fg:#EAF2EE; --muted:#9DB0A7;
+    --line:#243029; --accent:#34D399; --accent-weak:#163029; --star:#E3C25A; --ink:#EAF2EE; color-scheme:dark;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0E1512; --surface:#152019; --surface-2:#111A16; --fg:#EAF2EE; --muted:#9DB0A7;
+    --line:#243029; --accent:#34D399; --accent-weak:#163029; --star:#E3C25A; --ink:#EAF2EE; color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding-inline:20px}
+  /* nav (commun au site) */
+  header.site{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px)}
+  .hd{display:flex;align-items:center;gap:12px;padding:12px 0;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--fg)}
+  .brand .star{width:14px;height:14px;flex:none}
+  .brand b{font-family:var(--font-display);font-weight:600;font-size:21px}
+  .nav{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;margin-left:4px}
+  .nav a{color:var(--fg);text-decoration:none;padding:3px 0}
+  .nav a[aria-current]{color:var(--accent);font-weight:600}
+  .nav a:hover{color:var(--accent)}
+  .navcta{margin-left:auto;background:var(--accent);color:#fff;border-radius:9px;font-size:13px;font-weight:600;padding:8px 13px;text-decoration:none;white-space:nowrap}
+  .tgl{background:none;border:1px solid var(--line);border-radius:999px;width:30px;height:30px;cursor:pointer;color:var(--muted);font-size:14px;flex:none}
+  .eyebrow{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--star)}
+  .lab{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:40px 0 16px}
+  .hero{padding-block:44px 10px}
+  .hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,5.2vw,46px);line-height:1.06;margin:12px 0 14px;text-wrap:balance;max-width:17ch}
+  .hero p{margin:0;color:var(--muted);font-size:18px;max-width:60ch}
+  .cta{display:inline-block;margin-top:22px;background:var(--accent);color:#fff;border:none;border-radius:11px;font:inherit;font-weight:600;font-size:15px;padding:13px 22px;cursor:pointer;text-decoration:none}
+  .cta.star{background:var(--star)}
+  .cta.ghost{background:transparent;border:1px solid var(--line);color:var(--fg)}
+  /* proof */
+  .proof{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .pf{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .pf b{font-family:var(--font-display);font-size:18px;display:block}
+  .pf span{font-size:12.5px;color:var(--muted)}
+  .pf a{font-size:12.5px;color:var(--accent);text-decoration:none;display:inline-block;margin-top:8px}
+  .pf .dot{color:var(--accent);font-size:11px}
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .st{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .st .n{font-family:var(--font-mono);font-size:10px;color:var(--accent)}
+  .st h4{margin:6px 0 3px;font-size:14px;font-family:var(--font-display);font-weight:600}
+  .st p{margin:0;font-size:12px;color:var(--muted)}
+  /* get */
+  .get{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .g{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .g i{color:var(--accent);font-style:normal;font-weight:700;flex:none}
+  .g b{font-size:15px} .g span{font-size:13px;color:var(--muted)}
+  /* offers */
+  #offres{scroll-margin-top:72px}
+  .offers{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .o{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column}
+  .o.feat{border-color:var(--star);box-shadow:0 0 0 1px var(--star)}
+  .o .kind{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .o h3{font-family:var(--font-display);font-size:24px;font-weight:600;margin:6px 0 2px}
+  .o .price{font-family:var(--font-display);font-size:38px;font-weight:600;margin:10px 0 2px}
+  .o .price small{font-size:14px;color:var(--muted);font-weight:400;font-family:var(--font-body)}
+  .o .pay{font-size:12.5px;color:var(--muted)}
+  .o ul{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:7px}
+  .o li{font-size:13.5px;display:flex;gap:8px;align-items:flex-start}
+  .o li i{color:var(--accent);font-style:normal;flex:none}
+  .o .tag{align-self:flex-start;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:var(--star);color:#fff;border-radius:6px;padding:2px 8px;margin-bottom:2px}
+  .reserveline{text-align:center;margin-top:18px}
+  .scar{margin-top:16px;background:var(--ink);color:var(--bg);border-radius:14px;padding:20px;font-size:14px}
+  .scar b{color:var(--star)}
+  .honest{margin-top:16px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--star);border-radius:10px;padding:14px;font-size:13px;color:var(--muted)}
+  .endcta{text-align:center;padding-block:40px 10px}
+  .endcta h2{font-family:var(--font-display);font-weight:600;font-size:28px;margin:0 0 8px}
+  .endcta p{color:var(--muted);margin:0 0 6px}
+  footer{margin-top:28px;border-top:1px solid var(--line);padding-block:20px 44px;color:var(--muted);font-size:12px;line-height:1.6}
+  footer a{color:var(--accent)}
+  @media (max-width:800px){.proof,.steps,.get,.offers{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<header class="site"><div class="wrap hd">
+  <a class="brand" href="../">
+    <svg class="star" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 1.5l2.2 7.1 7.3.1-5.9 4.4 2.2 7-5.8-4.3L6.2 20l2.2-7L2.5 8.7l7.3-.1L12 1.5z" fill="var(--star)"/></svg>
+    <b>Merope</b>
+  </a>
+  <nav class="nav">
+    <a href="../">Marketplace</a>
+    <a href="./" aria-current="page">Réserver un marché</a>
+    <a href="../#comment">Comment ça marche</a>
+    <a href="../portal/">Mon espace</a>
+  </nav>
+  <a class="navcta" href="../portal/">Créer mon espace</a>
+  <button class="tgl" id="tgl" title="Thème">◐</button>
+</div></header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Programme de lancement · cohorte fondatrice</div>
+    <h1>Opérez un marché. Gardez 70 % des revenus.</h1>
+    <p>Merope fournit l'infrastructure — protocoles, capteurs, historique, marketplace, paiement. Vous apportez la connaissance d'un marché et d'un territoire. Chaque donnée produite devient un actif vendu dans la marketplace, et <b>vous touchez 70 % des ventes</b>.</p>
+    <a class="cta" href="#offres">Voir les formules</a>
+    <a class="cta ghost" href="../portal/" style="margin-left:8px">Créer mon espace</a>
+  </section>
+
+  <div class="lab">Ce n'est pas une idée — c'est déjà en ligne</div>
+  <section class="proof">
+    <div class="pf"><b>Alcyone</b> <span class="dot">●</span> <span>Space Economy Index — opérationnel, capture quotidienne.</span><br><a href="https://alcyone.network/" target="_blank" rel="noopener">alcyone.network →</a></div>
+    <div class="pf"><b>RealWorldAsset</b> <span class="dot">●</span> <span>Capital / tokenisation — le laboratoire finance.</span><br><a href="https://rwa-intelligence.netlify.app/" target="_blank" rel="noopener">voir le site →</a></div>
+    <div class="pf"><b>Merope Marketplace</b> <span class="dot">●</span> <span>La vitrine où vos actifs se vendent — et où vous êtes intégré.</span><br><a href="../">voir la marketplace →</a></div>
+  </section>
+
+  <div class="lab">Comment vous vous intégrez — en 5 étapes</div>
+  <section class="steps">
+    <div class="st"><div class="n">01</div><h4>Marché × territoire</h4><p>Votre licence — priorité, façon place de marché.</p></div>
+    <div class="st"><div class="n">02</div><h4>Protocole</h4><p>Le schéma imposé + les sources autorisées.</p></div>
+    <div class="st"><div class="n">03</div><h4>Capteurs + Studio</h4><p>API / Document / Web. Vous validez, Merope structure.</p></div>
+    <div class="st"><div class="n">04</div><h4>Produits</h4><p>Vos datasets, historiques et signaux listés.</p></div>
+    <div class="st"><div class="n">05</div><h4>Revenus</h4><p>70 % des ventes + la priorité sur votre marché.</p></div>
+  </section>
+
+  <div class="lab">Ce que vous obtenez</div>
+  <section class="get">
+    <div class="g"><i>✦</i><div><b>70 % de revenue share</b><br><span>Sur chaque vente de vos produits. Merope garde 30 % (infra, IA, paiement, distribution).</span></div></div>
+    <div class="g"><i>✦</i><div><b>Priorité territoriale</b><br><span>1 opérateur fondateur par marché × territoire — rareté, façon MIA.</span></div></div>
+    <div class="g"><i>✦</i><div><b>L'infrastructure complète</b><br><span>Protocoles, capteurs, entity resolution, snapshots, historique, marketplace, facturation.</span></div></div>
+    <div class="g"><i>✦</i><div><b>Vous n'avez pas à coder</b><br><span>Vous connaissez le marché ; Merope transforme vos observations en données structurées.</span></div></div>
+  </section>
+
+  <div class="lab" id="offres">L'offre fondatrice — prix de lancement −33%</div>
+  <section class="offers">
+    <div class="o">
+      <div class="kind">Done-with-you · on pose les rails, vous conduisez</div>
+      <h3>Founding Operator</h3>
+      <div class="price">€2 000 <small><s style="opacity:.55">€3 000</s> · one-time</small></div>
+      <div class="pay">Prix de lancement −33% · payable en 3× · 1 marché × territoire</div>
+      <ul>
+        <li><i>✓</i> <b>Analyse de marché</b> — on identifie votre secteur × territoire le plus prometteur</li>
+        <li><i>✓</i> Design du marché + protocole configuré</li>
+        <li><i>✓</i> 3-5 capteurs mis en place</li>
+        <li><i>✓</i> Contributor Studio + formation</li>
+        <li><i>✓</i> Structure du 1er dataset + listing</li>
+        <li><i>✓</i> 90 jours d'accompagnement (office hours)</li>
+      </ul>
+    </div>
+    <div class="o feat">
+      <span class="tag">Recommandé — marchés à fort potentiel</span>
+      <div class="kind">Done-for-you · on fait le premier tour de piste</div>
+      <h3>Founding+ </h3>
+      <div class="price">€4 000 <small><s style="opacity:.55">€6 000</s> · one-time</small></div>
+      <div class="pay">Prix de lancement −33% · payable en 3× · 2-3 marchés / territoires</div>
+      <ul>
+        <li><i>✓</i> Tout le Founding Operator, plus :</li>
+        <li><i>✓</i> <b>Analyse de marché approfondie</b> — scan de tous les secteurs prometteurs avant de construire</li>
+        <li><i>✓</i> <b>1er dataset construit avec de la vraie donnée</b> (actif vendable dès J1)</li>
+        <li><i>✓</i> Capteurs branchés + pipeline qui tourne</li>
+        <li><i>✓</i> Listing marketplace rempli (produit + aperçu)</li>
+        <li><i>✓</i> Support 1:1 prioritaire + 1er livrable d'intelligence</li>
+      </ul>
+    </div>
+  </section>
+  <div class="reserveline"><a class="cta" href="../portal/">Réserver — créer mon espace →</a></div>
+
+  <div class="scar">
+    <b>Cohorte fondatrice — 3 à 7 opérateurs maximum.</b> Une seule licence prioritaire par marché × territoire. Les marchés cœur (Capital, AI Infrastructure, Space) sont opérés par Dreamotion ; les opérateurs fondateurs reçoivent Energy, Industry / Logistics, Crypto et territoires adjacents.
+  </div>
+
+  <div class="honest">
+    <b>En toute transparence :</b> aucun revenu garanti — vos gains dépendent des ventes de vos produits. La « priorité » est une priorité d'opération et de création de produits, pas une exclusivité absolue sur la donnée publique. Merope est en lancement : vous rejoignez tôt, au prix fondateur, et vous façonnez le réseau.
+  </div>
+
+  <section class="endcta">
+    <h2>Réservez votre marché.</h2>
+    <p>Place limitée au premier cercle. On cadre votre marché × territoire ensemble.</p>
+    <a class="cta star" href="../portal/" style="margin-top:14px">Créer mon espace &amp; réserver</a>
+  </section>
+
+  <footer>
+    Merope — un réseau Dreamotion. ✦ We turn market knowledge into tradable intelligence.<br>
+    Prototype · prix de lancement. La réservation est une demande ; Dreamotion confirme votre licence.
+  </footer>
+</div>
+
+<script>
+  var tgl=document.getElementById('tgl');
+  try{var s=localStorage.getItem('merope-theme'); if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}
+  tgl.onclick=function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    var sysDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
+    var next=cur? (cur==='dark'?'light':'dark') : (sysDark?'light':'dark');
+    document.documentElement.setAttribute('data-theme',next);
+    try{localStorage.setItem('merope-theme',next);}catch(e){}
+  };
+</script>
+</body>
+</html>
